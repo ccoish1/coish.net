@@ -3,77 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Coish.Net">
   <title>Coish.Net</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="scene" aria-label="Coish.Net">
-    <div class="grain" aria-hidden="true"></div>
-
-    <div class="street">
-      <div class="street-floor">
-        <!-- Lamp rises from the pavement -->
-        <figure class="lamp-post" aria-hidden="true">
-        <svg class="lamp" viewBox="0 0 100 320" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="lanternGlow" cx="50%" cy="55%" r="50%">
-              <stop offset="0%" stop-color="#fff8e0"/>
-              <stop offset="40%" stop-color="#f0b840"/>
-              <stop offset="100%" stop-color="#6a4010"/>
-            </radialGradient>
-          </defs>
-          <!-- Post -->
-          <rect x="44" y="108" width="12" height="200" fill="#1c1c1c"/>
-          <rect x="46" y="120" width="3" height="180" fill="#333" opacity="0.4"/>
-          <!-- Base collar -->
-          <ellipse cx="50" cy="108" rx="18" ry="4" fill="#252525"/>
-          <!-- Lantern cap -->
-          <path d="M32 48 L68 48 L64 58 L36 58 Z" fill="#222"/>
-          <ellipse cx="50" cy="48" rx="20" ry="5" fill="#2a2a2a"/>
-          <!-- Lantern body (classic 4-panel) -->
-          <rect x="30" y="58" width="40" height="50" rx="2" fill="#141414" stroke="#2a2a2a" stroke-width="1.5"/>
-          <rect x="33" y="61" width="15" height="44" rx="1" fill="url(#lanternGlow)" class="lantern-glass"/>
-          <rect x="52" y="61" width="15" height="44" rx="1" fill="url(#lanternGlow)" class="lantern-glass"/>
-          <line x1="50" y1="58" x2="50" y2="108" stroke="#222" stroke-width="2"/>
-          <!-- Flame -->
-          <ellipse cx="50" cy="82" rx="6" ry="11" fill="#ffeaa0" opacity="0.95" class="flame"/>
-          <ellipse cx="50" cy="80" rx="3" ry="6" fill="#fff" opacity="0.85" class="flame-core"/>
-          <!-- Lantern bottom -->
-          <ellipse cx="50" cy="108" rx="22" ry="5" fill="#1a1a1a"/>
-          <!-- Base plate -->
-          <ellipse cx="50" cy="308" rx="28" ry="6" fill="#111"/>
-          <ellipse cx="50" cy="305" rx="22" ry="4" fill="#222"/>
-        </svg>
-        <div class="lantern-bloom" id="lantern-bloom"></div>
-      </figure>
-
-      <!-- Cobblestone pavement -->
-      <div class="pavement" id="pavement">
-        <div class="light-pool" id="light-pool"></div>
-        <svg class="cobbles" aria-hidden="true">
-          <defs>
-            <pattern id="cobble" x="0" y="0" width="44" height="30" patternUnits="userSpaceOnUse">
-              <rect width="44" height="30" fill="#100e0b"/>
-              <ellipse cx="12" cy="10" rx="10" ry="7" fill="#1e1812"/>
-              <ellipse cx="32" cy="13" rx="11" ry="8" fill="#181410"/>
-              <ellipse cx="22" cy="23" rx="12" ry="7" fill="#221c16"/>
-              <ellipse cx="6" cy="22" rx="8" ry="6" fill="#14100c"/>
-              <ellipse cx="38" cy="24" rx="9" ry="6" fill="#12100c"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#cobble)"/>
-        </svg>
-        <div class="pool-lit" id="pool-lit"></div>
-        <div class="post-shadow" aria-hidden="true"></div>
-        <p class="shadow-text" id="shadow-text">Coish.Net</p>
-      </div>
-      </div>
-    </div>
-  </main>
-  <script src="script.js"></script>
+  <img src="coish-hold-the-line-logo.png" alt="Coish.Net" width="480" height="480">
 </body>
 </html>
