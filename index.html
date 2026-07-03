@@ -3,7 +3,98 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>coish.net</title>
+  <meta name="description" content="Coish.Net">
+  <title>Coish.Net</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body></body>
+<body>
+  <main class="scene" aria-label="Coish.Net">
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="lamp-assembly">
+      <svg class="lamp" viewBox="0 0 120 420" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="postMetal" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1a1a1a"/>
+            <stop offset="35%" stop-color="#3d3d3d"/>
+            <stop offset="55%" stop-color="#2a2a2a"/>
+            <stop offset="100%" stop-color="#141414"/>
+          </linearGradient>
+          <radialGradient id="flameCore" cx="50%" cy="65%" r="50%">
+            <stop offset="0%" stop-color="#fff8d4"/>
+            <stop offset="35%" stop-color="#ffd56a"/>
+            <stop offset="70%" stop-color="#e8a020"/>
+            <stop offset="100%" stop-color="#8b4510"/>
+          </radialGradient>
+          <filter id="flameBlur" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2"/>
+          </filter>
+        </defs>
+        <!-- Base -->
+        <ellipse cx="60" cy="408" rx="38" ry="8" fill="#0a0a0a"/>
+        <path d="M38 400 Q60 392 82 400 L78 388 Q60 382 42 388 Z" fill="#222"/>
+        <!-- Post -->
+        <rect x="52" y="120" width="16" height="270" rx="2" fill="url(#postMetal)"/>
+        <rect x="54" y="130" width="3" height="250" fill="#4a4a4a" opacity="0.35"/>
+        <!-- Decorative rings -->
+        <ellipse cx="60" cy="120" rx="22" ry="6" fill="#2a2a2a"/>
+        <rect x="44" y="114" width="32" height="8" rx="2" fill="#333"/>
+        <path d="M34 108 Q60 98 86 108 L82 100 Q60 92 38 100 Z" fill="#2a2a2a"/>
+        <!-- Arm -->
+        <path d="M60 108 Q20 100 18 72 Q16 58 28 52" fill="none" stroke="url(#postMetal)" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="28" cy="52" r="6" fill="#333"/>
+        <!-- Lantern hanger -->
+        <path d="M28 52 L28 68" stroke="#444" stroke-width="3"/>
+        <!-- Lantern housing -->
+        <path d="M12 68 L44 68 L48 78 L8 78 Z" fill="#1f1f1f"/>
+        <rect x="8" y="78" width="40" height="52" rx="2" fill="#181818" stroke="#333" stroke-width="1"/>
+        <!-- Glass panels -->
+        <rect x="11" y="81" width="14" height="46" rx="1" fill="url(#flameCore)" opacity="0.85" class="lantern-glass"/>
+        <rect x="27" y="81" width="14" height="46" rx="1" fill="url(#flameCore)" opacity="0.85" class="lantern-glass"/>
+        <!-- Flame -->
+        <ellipse cx="28" cy="102" rx="8" ry="14" fill="url(#flameCore)" filter="url(#flameBlur)" class="flame"/>
+        <ellipse cx="28" cy="100" rx="4" ry="8" fill="#fffbe6" opacity="0.9" class="flame-core"/>
+        <!-- Lantern cap -->
+        <path d="M6 78 L50 78 L46 68 L10 68 Z" fill="#252525"/>
+        <path d="M18 68 Q28 58 38 68" fill="#2a2a2a"/>
+        <ellipse cx="28" cy="58" rx="14" ry="5" fill="#1a1a1a"/>
+      </svg>
+      <div class="lamp-halo" id="lamp-halo" aria-hidden="true"></div>
+    </div>
+
+    <div class="light-cone" id="light-cone" aria-hidden="true"></div>
+
+    <div class="ground-wrap">
+      <div class="ground" id="ground">
+        <svg class="cobbles" aria-hidden="true">
+          <defs>
+            <pattern id="cobble" x="0" y="0" width="48" height="32" patternUnits="userSpaceOnUse">
+              <rect width="48" height="32" fill="#1a1510"/>
+              <ellipse cx="12" cy="10" rx="11" ry="8" fill="#2a2218"/>
+              <ellipse cx="36" cy="14" rx="12" ry="9" fill="#241e16"/>
+              <ellipse cx="24" cy="26" rx="13" ry="8" fill="#2e261c"/>
+              <ellipse cx="8" cy="24" rx="9" ry="7" fill="#221c14"/>
+              <ellipse cx="40" cy="26" rx="10" ry="7" fill="#1e1812"/>
+              <path d="M4 8 Q12 6 20 8" stroke="#0d0a08" stroke-width="0.6" fill="none" opacity="0.5"/>
+              <path d="M28 4 Q36 2 44 6" stroke="#0d0a08" stroke-width="0.6" fill="none" opacity="0.5"/>
+            </pattern>
+            <radialGradient id="litGround" cx="50%" cy="0%" r="85%">
+              <stop offset="0%" stop-color="#c9a050" stop-opacity="0.55"/>
+              <stop offset="45%" stop-color="#6b5030" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#1a1510" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#cobble)"/>
+          <rect width="100%" height="100%" fill="url(#litGround)" class="ground-lit" id="ground-lit"/>
+        </svg>
+        <p class="shadow-text" id="shadow-text">Coish.Net</p>
+      </div>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
 </html>
