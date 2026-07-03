@@ -1,78 +1,57 @@
 (function () {
-  var lightCone = document.getElementById("light-cone");
-  var lampHalo = document.getElementById("lamp-halo");
-  var groundLit = document.getElementById("ground-lit");
+  var lightPool = document.getElementById("light-pool");
+  var poolLit = document.getElementById("pool-lit");
+  var lanternBloom = document.getElementById("lantern-bloom");
   var shadowText = document.getElementById("shadow-text");
-  var scene = document.querySelector(".scene");
   var flames = document.querySelectorAll(".flame, .flame-core");
   var glasses = document.querySelectorAll(".lantern-glass");
 
-  if (!lightCone || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (!lightPool || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     return;
   }
 
-  var intensity = 1;
-
   function applyIntensity(value) {
-    intensity = value;
-    lightCone.style.opacity = String(value);
-    if (lampHalo) lampHalo.style.opacity = String(0.55 + value * 0.45);
-    if (groundLit) groundLit.style.opacity = String(0.65 + value * 0.35);
+    lightPool.style.opacity = String(0.55 + value * 0.45);
+    if (poolLit) poolLit.style.opacity = String(0.5 + value * 0.5);
+    if (lanternBloom) lanternBloom.style.opacity = String(0.5 + value * 0.5);
     if (shadowText) {
-      shadowText.style.opacity = String(0.72 + value * 0.2);
-      shadowText.style.filter = "blur(" + (1.2 - value * 0.5) + "px)";
+      shadowText.style.opacity = String(0.65 + value * 0.3);
     }
     flames.forEach(function (el) {
-      el.style.opacity = String(0.7 + value * 0.3);
-      el.style.transform = "scale(" + (0.9 + value * 0.12) + ")";
+      el.style.opacity = String(0.75 + value * 0.25);
+      el.style.transform = "scale(" + (0.92 + value * 0.1) + ")";
     });
     glasses.forEach(function (el) {
-      el.style.opacity = String(0.65 + value * 0.35);
+      el.style.opacity = String(0.7 + value * 0.3);
     });
   }
 
-  function nextFlickerDelay() {
-    return 40 + Math.random() * 120;
+  function nextDelay() {
+    return 50 + Math.random() * 130;
   }
 
   function tick() {
     var roll = Math.random();
 
-    if (roll < 0.06) {
-      // Brief blackout / heavy dim
-      applyIntensity(0.15 + Math.random() * 0.2);
-      scene.classList.add("is-dim");
-      scene.classList.remove("is-flash");
-      setTimeout(tick, 60 + Math.random() * 140);
+    if (roll < 0.05) {
+      applyIntensity(0.12 + Math.random() * 0.18);
+      setTimeout(tick, 80 + Math.random() * 120);
       return;
     }
 
-    if (roll < 0.1) {
-      // Sharp flash then recover
-      applyIntensity(1.15 + Math.random() * 0.15);
-      scene.classList.add("is-flash");
-      scene.classList.remove("is-dim");
+    if (roll < 0.09) {
+      applyIntensity(1.05 + Math.random() * 0.1);
       setTimeout(function () {
-        applyIntensity(0.75 + Math.random() * 0.2);
-        scene.classList.remove("is-flash");
-        setTimeout(tick, nextFlickerDelay());
-      }, 30 + Math.random() * 50);
+        applyIntensity(0.7 + Math.random() * 0.2);
+        setTimeout(tick, nextDelay());
+      }, 40 + Math.random() * 40);
       return;
     }
 
-    if (roll < 0.25) {
-      // Quick stutter
-      applyIntensity(0.5 + Math.random() * 0.35);
-      scene.classList.add("is-dim");
-    } else {
-      // Normal warm flicker
-      applyIntensity(0.78 + Math.random() * 0.22);
-      scene.classList.remove("is-dim");
-    }
-
-    setTimeout(tick, nextFlickerDelay());
+    applyIntensity(0.75 + Math.random() * 0.25);
+    setTimeout(tick, nextDelay());
   }
 
-  applyIntensity(0.92);
-  setTimeout(tick, 200);
+  applyIntensity(0.9);
+  setTimeout(tick, 300);
 })();

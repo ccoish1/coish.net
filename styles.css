@@ -14,36 +14,16 @@ body {
 }
 
 body {
-  font-family: "Cinzel", Georgia, "Times New Roman", serif;
+  font-family: "Cinzel", Georgia, serif;
   -webkit-font-smoothing: antialiased;
 }
 
 .scene {
-  position: relative;
   width: 100%;
   height: 100vh;
   height: 100dvh;
   background: #000;
   overflow: hidden;
-  --street-height: clamp(220px, 44vh, 400px);
-}
-
-/* Unified stage — lamp, light, and ground share one coordinate space */
-.composition {
-  position: absolute;
-  inset: 0;
-}
-
-.vignette {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 20;
-  background: radial-gradient(
-    ellipse 70% 65% at 50% 42%,
-    transparent 30%,
-    rgba(0, 0, 0, 0.65) 100%
-  );
 }
 
 .grain {
@@ -52,40 +32,52 @@ body {
   width: 200%;
   height: 200%;
   pointer-events: none;
-  z-index: 21;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grainShift 0.4s steps(2) infinite;
+  z-index: 10;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grainShift 0.5s steps(2) infinite;
 }
 
 @keyframes grainShift {
   0% { transform: translate(0, 0); }
-  50% { transform: translate(-2%, -1%); }
-  100% { transform: translate(1%, 2%); }
+  100% { transform: translate(-1%, 1%); }
 }
 
-/* Cobblestone street — perspective floor */
-.ground-wrap {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: min(150vw, 960px);
-  height: var(--street-height, clamp(220px, 44vh, 400px));
-  perspective: 520px;
-  perspective-origin: 50% 0%;
-  z-index: 2;
+/* Everything lives in one grounded street scene */
+.street {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: clamp(1.5rem, 5vh, 3.5rem);
 }
 
-.ground {
-  position: absolute;
-  inset: 0;
-  transform: rotateX(72deg);
-  transform-origin: center top;
-  overflow: hidden;
-  box-shadow:
-    0 -4px 60px rgba(255, 175, 60, 0.06),
-    inset 0 30px 80px rgba(0, 0, 0, 0.55);
+.street-floor {
+  position: relative;
+  width: min(110vw, 820px);
+}
+
+/* Pavement — gentle tilt, fades into darkness at edges */
+.pavement {
+  position: relative;
+  width: 100%;
+  height: clamp(200px, 38vh, 340px);
+  transform: perspective(900px) rotateX(42deg);
+  transform-origin: center bottom;
+  z-index: 1;
+  -webkit-mask-image: radial-gradient(
+    ellipse 88% 92% at 50% 38%,
+    #000 25%,
+    transparent 72%
+  );
+  mask-image: radial-gradient(
+    ellipse 88% 92% at 50% 38%,
+    #000 25%,
+    transparent 72%
+  );
 }
 
 .cobbles {
@@ -95,40 +87,85 @@ body {
   height: 100%;
 }
 
-.ground-lit {
-  transition: opacity 0.05s linear;
+/* Warm pool of light on the stones — no beam in the air */
+.light-pool,
+.pool-lit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.06s linear;
 }
 
-/* Base plate where post meets the cobblestones */
-.post-base {
-  position: absolute;
-  left: 50%;
-  top: 6%;
-  transform: translateX(-50%);
-  width: clamp(64px, 14vw, 100px);
-  height: clamp(18px, 3.5vw, 26px);
-  border-radius: 50%;
+.light-pool {
   background: radial-gradient(
-    ellipse,
-    #1a1612 0%,
-    #0a0806 70%,
-    transparent 100%
+    ellipse 55% 65% at 50% 22%,
+    rgba(210, 160, 70, 0.55) 0%,
+    rgba(150, 105, 45, 0.28) 35%,
+    rgba(60, 42, 22, 0.08) 60%,
+    transparent 78%
   );
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.9),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  z-index: 3;
+  z-index: 2;
 }
 
-/* Victorian lamp — base sits on the far edge of the cobblestones */
-.lamp-stand {
+.pool-lit {
+  background: radial-gradient(
+    ellipse 40% 50% at 50% 25%,
+    rgba(255, 220, 140, 0.18) 0%,
+    transparent 70%
+  );
+  z-index: 3;
+  mix-blend-mode: soft-light;
+}
+
+/* Faint shadow the post casts on the stones */
+.post-shadow {
   position: absolute;
   left: 50%;
-  bottom: var(--street-height, clamp(220px, 44vh, 400px));
+  top: 8%;
   transform: translateX(-50%);
+  width: 14px;
+  height: 55%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, transparent 100%);
+  filter: blur(3px);
   z-index: 4;
-  height: clamp(260px, 48vh, 440px);
-  width: auto;
+}
+
+.shadow-text {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%) scaleY(0.55);
+  font-size: clamp(1.6rem, 6.5vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.82);
+  filter: blur(0.5px);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  z-index: 5;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.06s linear;
+}
+
+@keyframes shadowDrift {
+  0%, 100% { transform: translate(-50%, -50%) scaleY(0.55); }
+  50% { transform: translate(calc(-50% + 1px), calc(-50% + 1px)) scaleY(0.55); }
+}
+
+.shadow-text {
+  animation: shadowDrift 8s ease-in-out infinite;
+}
+
+/* Lamp post — base rooted at the back of the pavement */
+.lamp-post {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - 1.5rem);
+  transform: translateX(-50%);
+  height: clamp(200px, 44vh, 360px);
+  margin: 0;
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -136,118 +173,51 @@ body {
   height: 100%;
   width: auto;
   display: block;
-  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.8));
 }
 
 .flame,
 .flame-core,
 .lantern-glass {
-  transform-origin: 100px 118px;
+  transform-origin: 50px 82px;
 }
 
-.lamp-halo {
+/* Tight glow around the lantern only — not a beam */
+.lantern-bloom {
   position: absolute;
-  top: 4%;
+  top: 14%;
   left: 50%;
   transform: translateX(-50%);
-  width: clamp(90px, 22vw, 160px);
-  height: clamp(90px, 22vw, 160px);
+  width: clamp(56px, 14vw, 90px);
+  height: clamp(56px, 14vw, 90px);
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(255, 205, 90, 0.6) 0%,
-    rgba(255, 155, 40, 0.22) 45%,
+    rgba(255, 195, 80, 0.45) 0%,
+    rgba(255, 150, 40, 0.12) 50%,
     transparent 72%
   );
   pointer-events: none;
-  mix-blend-mode: screen;
-}
-
-/* Light cone — from lantern glass down to the lit patch on stones */
-.light-cone {
-  position: absolute;
-  left: 50%;
-  top: clamp(40px, 7vh, 72px);
-  transform: translateX(-50%);
-  width: min(88vw, 480px);
-  bottom: var(--street-height, clamp(220px, 44vh, 400px));
-  height: auto;
-  pointer-events: none;
-  z-index: 3;
-  background: radial-gradient(
-    ellipse 50% 100% at 50% 0%,
-    rgba(255, 210, 115, 0.42) 0%,
-    rgba(255, 175, 70, 0.24) 22%,
-    rgba(190, 130, 50, 0.12) 50%,
-    rgba(100, 70, 30, 0.05) 72%,
-    transparent 100%
-  );
-  clip-path: polygon(42% 0%, 58% 0%, 100% 100%, 0% 100%);
-  mix-blend-mode: screen;
-  transition: opacity 0.05s linear;
-}
-
-/* Shadow in the lamplight */
-.shadow-text {
-  position: absolute;
-  left: 50%;
-  top: 48%;
-  transform: translate(-50%, -50%) scaleY(0.68) skewX(-3deg);
-  font-family: "Cinzel", Georgia, serif;
-  font-size: clamp(1.85rem, 7.5vw, 4.25rem);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.85);
-  filter: blur(0.8px);
-  text-shadow:
-    1px 2px 4px rgba(0, 0, 0, 0.95),
-    0 0 24px rgba(0, 0, 0, 0.8);
-  opacity: 0.9;
-  pointer-events: none;
-  user-select: none;
-  z-index: 4;
-  transition: opacity 0.05s linear, filter 0.05s linear;
-}
-
-@keyframes shadowDrift {
-  0%, 100% { transform: translate(-50%, -50%) scaleY(0.68) skewX(-3deg); }
-  50% { transform: translate(calc(-50% + 2px), calc(-50% + 1px)) scaleY(0.68) skewX(-2deg); }
-}
-
-.shadow-text {
-  animation: shadowDrift 7s ease-in-out infinite;
-}
-
-.scene.is-dim .light-cone {
-  opacity: 0.5;
-}
-
-.scene.is-flash .light-cone {
-  opacity: 1;
+  transition: opacity 0.06s linear;
 }
 
 @media (max-width: 480px) {
-  .scene {
-    --street-height: clamp(190px, 40vh, 280px);
+  .street-floor {
+    width: 130vw;
   }
 
-  .ground-wrap {
-    width: 175vw;
+  .pavement {
+    height: clamp(160px, 34vh, 240px);
+    transform: perspective(700px) rotateX(38deg);
   }
 
-  .lamp-stand {
-    height: clamp(220px, 42vh, 340px);
-  }
-
-  .light-cone {
-    width: 96vw;
-    top: clamp(32px, 6vh, 56px);
+  .lamp-post {
+    height: clamp(175px, 38vh, 260px);
+    bottom: calc(100% - 1rem);
   }
 
   .shadow-text {
-    letter-spacing: 0.05em;
-    top: 50%;
+    letter-spacing: 0.06em;
+    top: 54%;
   }
 }
 
