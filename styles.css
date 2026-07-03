@@ -18,11 +18,13 @@ body {
   justify-content: center;
   min-height: 100vh;
   min-height: 100dvh;
+  padding: 1rem;
 }
 
 img {
   display: block;
-  max-width: min(88vw, 420px);
+  max-width: min(96vw, 720px);
   width: 100%;
   height: auto;
+  border-radius: 2px;
 }
