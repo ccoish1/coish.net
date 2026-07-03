@@ -21,10 +21,34 @@ body {
   padding: 1rem;
 }
 
-img {
-  display: block;
+.image-wrap {
+  position: relative;
   max-width: min(96vw, 720px);
   width: 100%;
+  line-height: 0;
+}
+
+.image-wrap img {
+  display: block;
+  width: 100%;
   height: auto;
-  border-radius: 2px;
+}
+
+/* Fade the front cobblestone edge into the page black */
+.image-wrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.18) 22%,
+    rgba(0, 0, 0, 0.52) 48%,
+    rgba(0, 0, 0, 0.82) 72%,
+    #000 100%
+  );
+  pointer-events: none;
 }
