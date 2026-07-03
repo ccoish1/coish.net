@@ -23,23 +23,26 @@ body {
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  background: radial-gradient(ellipse 80% 60% at 50% 18%, #0d0c0a 0%, #000 70%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background: #000;
   overflow: hidden;
+  --street-height: clamp(220px, 44vh, 400px);
 }
 
-/* Film grain & vignette */
+/* Unified stage — lamp, light, and ground share one coordinate space */
+.composition {
+  position: absolute;
+  inset: 0;
+}
+
 .vignette {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 20;
   background: radial-gradient(
-    ellipse 75% 75% at 50% 45%,
-    transparent 35%,
-    rgba(0, 0, 0, 0.55) 100%
+    ellipse 70% 65% at 50% 42%,
+    transparent 30%,
+    rgba(0, 0, 0, 0.65) 100%
   );
 }
 
@@ -61,91 +64,28 @@ body {
   100% { transform: translate(1%, 2%); }
 }
 
-/* Lamp */
-.lamp-assembly {
-  position: relative;
-  z-index: 10;
-  margin-top: clamp(0.5rem, 3vh, 2rem);
-  flex-shrink: 0;
-}
-
-.lamp {
-  width: clamp(72px, 14vw, 110px);
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 0 12px rgba(255, 180, 60, 0.15));
-}
-
-.flame,
-.flame-core,
-.lantern-glass {
-  transform-origin: 28px 102px;
-}
-
-.lamp-halo {
-  position: absolute;
-  top: 11%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(80px, 18vw, 140px);
-  height: clamp(80px, 18vw, 140px);
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 210, 100, 0.55) 0%,
-    rgba(255, 160, 40, 0.2) 40%,
-    transparent 70%
-  );
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-
-/* Light cone falling to the ground */
-.light-cone {
-  position: absolute;
-  top: clamp(100px, 22vh, 180px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(92vw, 520px);
-  height: clamp(280px, 52vh, 480px);
-  pointer-events: none;
-  z-index: 5;
-  background: radial-gradient(
-    ellipse 55% 100% at 50% 0%,
-    rgba(255, 210, 120, 0.38) 0%,
-    rgba(255, 175, 70, 0.22) 25%,
-    rgba(200, 130, 50, 0.1) 55%,
-    rgba(120, 80, 30, 0.04) 75%,
-    transparent 100%
-  );
-  clip-path: polygon(38% 0%, 62% 0%, 100% 100%, 0% 100%);
-  mix-blend-mode: screen;
-  transition: opacity 0.05s linear;
-}
-
-/* Cobblestone ground — perspective plane */
+/* Cobblestone street — perspective floor */
 .ground-wrap {
   position: absolute;
-  bottom: 0;
   left: 50%;
+  bottom: 0;
   transform: translateX(-50%);
-  width: min(140vw, 900px);
-  height: clamp(200px, 38vh, 340px);
-  perspective: 600px;
+  width: min(150vw, 960px);
+  height: var(--street-height, clamp(220px, 44vh, 400px));
+  perspective: 520px;
   perspective-origin: 50% 0%;
-  z-index: 6;
+  z-index: 2;
 }
 
 .ground {
   position: absolute;
   inset: 0;
-  transform: rotateX(68deg);
+  transform: rotateX(72deg);
   transform-origin: center top;
   overflow: hidden;
-  border-radius: 4px;
   box-shadow:
-    0 -2px 40px rgba(255, 180, 60, 0.08),
-    inset 0 0 80px rgba(0, 0, 0, 0.6);
+    0 -4px 60px rgba(255, 175, 60, 0.06),
+    inset 0 30px 80px rgba(0, 0, 0, 0.55);
 }
 
 .cobbles {
@@ -159,49 +99,128 @@ body {
   transition: opacity 0.05s linear;
 }
 
-/* Shadow cast in the lamplight */
+/* Base plate where post meets the cobblestones */
+.post-base {
+  position: absolute;
+  left: 50%;
+  top: 6%;
+  transform: translateX(-50%);
+  width: clamp(64px, 14vw, 100px);
+  height: clamp(18px, 3.5vw, 26px);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    #1a1612 0%,
+    #0a0806 70%,
+    transparent 100%
+  );
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  z-index: 3;
+}
+
+/* Victorian lamp — base sits on the far edge of the cobblestones */
+.lamp-stand {
+  position: absolute;
+  left: 50%;
+  bottom: var(--street-height, clamp(220px, 44vh, 400px));
+  transform: translateX(-50%);
+  z-index: 4;
+  height: clamp(260px, 48vh, 440px);
+  width: auto;
+  pointer-events: none;
+}
+
+.lamp {
+  height: 100%;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.8));
+}
+
+.flame,
+.flame-core,
+.lantern-glass {
+  transform-origin: 100px 118px;
+}
+
+.lamp-halo {
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(90px, 22vw, 160px);
+  height: clamp(90px, 22vw, 160px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 205, 90, 0.6) 0%,
+    rgba(255, 155, 40, 0.22) 45%,
+    transparent 72%
+  );
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Light cone — from lantern glass down to the lit patch on stones */
+.light-cone {
+  position: absolute;
+  left: 50%;
+  top: clamp(40px, 7vh, 72px);
+  transform: translateX(-50%);
+  width: min(88vw, 480px);
+  bottom: var(--street-height, clamp(220px, 44vh, 400px));
+  height: auto;
+  pointer-events: none;
+  z-index: 3;
+  background: radial-gradient(
+    ellipse 50% 100% at 50% 0%,
+    rgba(255, 210, 115, 0.42) 0%,
+    rgba(255, 175, 70, 0.24) 22%,
+    rgba(190, 130, 50, 0.12) 50%,
+    rgba(100, 70, 30, 0.05) 72%,
+    transparent 100%
+  );
+  clip-path: polygon(42% 0%, 58% 0%, 100% 100%, 0% 100%);
+  mix-blend-mode: screen;
+  transition: opacity 0.05s linear;
+}
+
+/* Shadow in the lamplight */
 .shadow-text {
   position: absolute;
   left: 50%;
-  top: 42%;
-  transform: translate(-50%, -50%) scaleY(0.72) skewX(-4deg);
+  top: 48%;
+  transform: translate(-50%, -50%) scaleY(0.68) skewX(-3deg);
   font-family: "Cinzel", Georgia, serif;
-  font-size: clamp(2rem, 8vw, 4.5rem);
+  font-size: clamp(1.85rem, 7.5vw, 4.25rem);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   white-space: nowrap;
-  color: transparent;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.92) 0%,
-    rgba(0, 0, 0, 0.78) 100%
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  filter: blur(0.6px);
+  color: rgba(0, 0, 0, 0.85);
+  filter: blur(0.8px);
   text-shadow:
-    0 0 2px rgba(0, 0, 0, 0.9),
-    2px 4px 12px rgba(0, 0, 0, 0.95),
-    0 0 30px rgba(0, 0, 0, 0.7);
-  opacity: 0.88;
+    1px 2px 4px rgba(0, 0, 0, 0.95),
+    0 0 24px rgba(0, 0, 0, 0.8);
+  opacity: 0.9;
   pointer-events: none;
   user-select: none;
+  z-index: 4;
   transition: opacity 0.05s linear, filter 0.05s linear;
 }
 
-/* Subtle shadow drift when light moves */
 @keyframes shadowDrift {
-  0%, 100% { transform: translate(-50%, -50%) scaleY(0.72) skewX(-4deg); }
-  50% { transform: translate(calc(-50% + 3px), calc(-50% + 1px)) scaleY(0.72) skewX(-3deg); }
+  0%, 100% { transform: translate(-50%, -50%) scaleY(0.68) skewX(-3deg); }
+  50% { transform: translate(calc(-50% + 2px), calc(-50% + 1px)) scaleY(0.68) skewX(-2deg); }
 }
 
 .shadow-text {
-  animation: shadowDrift 6s ease-in-out infinite;
+  animation: shadowDrift 7s ease-in-out infinite;
 }
 
-/* Flicker classes toggled by JS */
 .scene.is-dim .light-cone {
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .scene.is-flash .light-cone {
@@ -209,17 +228,26 @@ body {
 }
 
 @media (max-width: 480px) {
+  .scene {
+    --street-height: clamp(190px, 40vh, 280px);
+  }
+
   .ground-wrap {
-    width: 160vw;
-    height: clamp(180px, 34vh, 260px);
+    width: 175vw;
+  }
+
+  .lamp-stand {
+    height: clamp(220px, 42vh, 340px);
   }
 
   .light-cone {
-    width: 95vw;
+    width: 96vw;
+    top: clamp(32px, 6vh, 56px);
   }
 
   .shadow-text {
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
+    top: 50%;
   }
 }
 

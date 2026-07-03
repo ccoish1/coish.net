@@ -24,7 +24,7 @@
     }
     flames.forEach(function (el) {
       el.style.opacity = String(0.7 + value * 0.3);
-      el.style.transform = "scale(" + (0.92 + value * 0.1) + ")";
+      el.style.transform = "scale(" + (0.9 + value * 0.12) + ")";
     });
     glasses.forEach(function (el) {
       el.style.opacity = String(0.65 + value * 0.35);
