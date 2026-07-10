@@ -1,6 +1,6 @@
 # coish.net
 
-Static splash / marketing site for [coish.net](https://coish.net).
+Static splash / marketing site for [coish.net](https://www.coish.net).
 
 ## Deploy (Vercel)
 

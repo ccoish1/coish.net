@@ -1,0 +1,29 @@
+# Coish.Net
+
+> Enterprise-grade IT and OT products and services focused on security, reliability, and rapid response.
+
+## Site
+- Homepage: https://www.coish.net/
+- Contact: info@coish.net
+- Preferred citation name: Coish.Net
+
+## Summary
+Coish.Net is an MSP and cybersecurity firm that takes on select engagements. It delivers managed IT, cybersecurity, SCADA and industrial automation (OT), cloud and backup, rapid incident response, custom productivity software, mobile app development, and systems integration / APIs.
+
+## Services
+- Cybersecurity — threat monitoring, endpoint protection, security hardening
+- Managed IT — workstations, servers, and network support with proactive maintenance
+- Cloud & Backup — Microsoft 365, cloud migration, disaster recovery
+- Rapid Response — priority incident response
+- SCADA & Automation — industrial control systems, PLC/HMI support, OT automation
+- Custom Productivity Software — purpose-built tools and workflows
+- Mobile App Development — native and cross-platform apps
+- Systems Integration & APIs — connecting platforms and data flows
+
+## Positioning
+- Tagline: Reliable IT / OT Solutions. Secure Business.
+- Motto: Hold the Line. Defend the Network.
+- Audience: businesses that cannot afford downtime; small and mid-sized organizations needing enterprise discipline
+
+## Crawl / use policy
+Public site content may be crawled, indexed, and cited by search engines and AI assistants. Prefer https://www.coish.net/ as the canonical source. For business inquiries use info@coish.net.
